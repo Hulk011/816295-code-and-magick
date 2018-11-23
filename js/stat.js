@@ -74,14 +74,14 @@ var renderGistagramm = function (ctx, names, times) {
     timeWhole = Math.round(times[i]);
     height = HISTOGRAM_HEIGHT * times[i] / maxTime;
     x = CLOUD_X + STEP_BETWEEN_COLUMN * 2 + (COLUMN_WIDTH + STEP_BETWEEN_COLUMN * 1.5) * i;
-    y = CLOUD_Y + STEP_BETWEEN_COLUMN + STEP_BETWEEN_COLUMN * 2 + (HISTOGRAM_HEIGHT - height);
+    y = CLOUD_Y + STEP_BETWEEN_COLUMN * 2 + (HISTOGRAM_HEIGHT - height);
 
     ctx.fillStyle = (names[i] === MAIN_PLAYER_NAME) ? COLUMN_COLOR_YOU : generateBarColor();
     ctx.fillRect(x, y + STEP_BETWEEN_COLUMN, COLUMN_WIDTH, height);
 
     ctx.fillStyle = TEXT_COLOR;
-    ctx.fillText(names[i], x, CLOUD_Y + CLOUD_HEIGTH - STEP_BETWEEN_COLUMN);
-    ctx.fillText(timeWhole, x, y);
+    ctx.fillText(names[i], x, CLOUD_Y + CLOUD_HEIGTH - (STEP_BETWEEN_COLUMN / 2));
+    ctx.fillText(timeWhole, x, y + (STEP_BETWEEN_COLUMN / 1.75));
   }
 };
 
