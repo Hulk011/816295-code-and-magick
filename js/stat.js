@@ -14,8 +14,8 @@ var SHADOW_Y = CLOUD_Y + SHADOW_OFFSET;
 var TEXT_FONT = '16px PT Mono';
 var TEXT_COLOR = 'rgba(0, 0, 0, 1)';
 var MESSAGE_CONGRATULATIONS = 'Ура, вы победили!';
-var MESSAGE_CONGRATULATIONS_SITE_X = 120;
-var MESSAGE_CONGRATULATIONS_SITE_Y = 40;
+var MESSAGE_X = 120;
+var MESSAGE_Y = 40;
 var MESSAGE_RESULT = 'Список результатов';
 
 var HISTOGRAM_HEIGHT = 150;
@@ -47,8 +47,8 @@ var renderShadow = function (ctx) {
 var renderMessages = function (ctx) {
   ctx.fillStyle = TEXT_COLOR;
   ctx.font = TEXT_FONT;
-  ctx.fillText(MESSAGE_CONGRATULATIONS, MESSAGE_CONGRATULATIONS_SITE_X, MESSAGE_CONGRATULATIONS_SITE_Y);
-  ctx.fillText(MESSAGE_RESULT, MESSAGE_CONGRATULATIONS_SITE_X, MESSAGE_CONGRATULATIONS_SITE_Y + (SHADOW_OFFSET * 2));
+  ctx.fillText(MESSAGE_CONGRATULATIONS, MESSAGE_X, MESSAGE_Y);
+  ctx.fillText(MESSAGE_RESULT, MESSAGE_X, MESSAGE_Y + (SHADOW_OFFSET * 2));
 };
 
 var getMaxTime = function (times) {
@@ -67,7 +67,7 @@ var renderGistagramm = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
     var timeWhole = Math.round(times[i]);
     var height = HISTOGRAM_HEIGHT * times[i] / maxTime;
-    var x = CLOUD_X + STEP_BETWEEN_COLUMN * 2 + (COLUMN_WIDTH + STEP_BETWEEN_COLUMN * 1.5) * i; // @TODO
+    var x = CLOUD_X + STEP_BETWEEN_COLUMN * 2 + (COLUMN_WIDTH + STEP_BETWEEN_COLUMN * 1.5) * i;
     var y = CLOUD_Y + STEP_BETWEEN_COLUMN + STEP_BETWEEN_COLUMN * 2 + (HISTOGRAM_HEIGHT - height);
 
     ctx.fillStyle = (names[i] === MAIN_PLAYER_NAME) ? COLUMN_COLOR_YOU : generateBarColor();
