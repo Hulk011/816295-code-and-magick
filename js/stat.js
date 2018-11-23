@@ -7,6 +7,10 @@ var CLOUD_Y = 10;
 var CLOUD_HEIGTH = 270;
 var CLOUD_WIDTH = 420;
 
+var SHADOW_OFFSET = 10;
+var SHADOW_X = CLOUD_X + SHADOW_OFFSET;
+var SHADOW_Y = CLOUD_Y + SHADOW_OFFSET;
+
 var TEXT_FONT = '16px PT Mono';
 var TEXT_COLOR = 'rgba(0, 0, 0, 1)';
 var MESSAGE_CONGRATULATIONS = 'Ура, вы победили!';
@@ -19,14 +23,16 @@ var STEP_BETWEEN_COLUMN = 30;
 var COLUMN_WIDTH = 40;
 var COLUMN_COLOR_YOU = 'rgba(255, 0, 0, 1)';
 
+var MAIN_PLAYER_NAME = 'Вы';
+
 
 var getRandom = function (min, max) {
   return Math.random() * (max - min) + min;
 };
 
-var COLUMN_COLOR_OTHER = 'rgba(0, 0, 255, ' + getRandom(0, 1) + ')';
-
-var offset = 10;
+var generateBarColor = function () {
+  return 'rgba(0, 0, 255, ' + getRandom(0, 1) + ')';
+};
 
 var renderCloud = function (ctx) {
   ctx.fillStyle = CLOUD_COLOR;
@@ -35,14 +41,14 @@ var renderCloud = function (ctx) {
 
 var renderShadow = function (ctx) {
   ctx.fillStyle = SHADOW_COLOR;
-  ctx.fillRect(CLOUD_X + offset, CLOUD_Y + offset, CLOUD_WIDTH, CLOUD_HEIGTH);
+  ctx.fillRect(SHADOW_X, SHADOW_Y, CLOUD_WIDTH, CLOUD_HEIGTH);
 };
 
 var renderMessages = function (ctx) {
   ctx.fillStyle = TEXT_COLOR;
   ctx.font = TEXT_FONT;
   ctx.fillText(MESSAGE_CONGRATULATIONS, MESSAGE_CONGRATULATIONS_SITE_X, MESSAGE_CONGRATULATIONS_SITE_Y);
-  ctx.fillText(MESSAGE_RESULT, MESSAGE_CONGRATULATIONS_SITE_X, MESSAGE_CONGRATULATIONS_SITE_Y + (offset * 2));
+  ctx.fillText(MESSAGE_RESULT, MESSAGE_CONGRATULATIONS_SITE_X, MESSAGE_CONGRATULATIONS_SITE_Y + (SHADOW_OFFSET * 2));
 };
 
 var getMaxTime = function (times) {
@@ -57,18 +63,14 @@ var getMaxTime = function (times) {
 };
 
 var renderGistagramm = function (ctx, names, times) {
-
   var maxTime = getMaxTime(times);
-
   for (var i = 0; i < names.length; i++) {
     var timeWhole = Math.round(times[i]);
-
-    var height = (HISTOGRAM_HEIGHT * times[i]) / maxTime;
-
-    var x = CLOUD_X + STEP_BETWEEN_COLUMN * 2 + (COLUMN_WIDTH + 50) * i;
+    var height = HISTOGRAM_HEIGHT * times[i] / maxTime;
+    var x = CLOUD_X + STEP_BETWEEN_COLUMN * 2 + (COLUMN_WIDTH + STEP_BETWEEN_COLUMN * 1.5) * i; // @TODO
     var y = CLOUD_Y + STEP_BETWEEN_COLUMN + STEP_BETWEEN_COLUMN * 2 + (HISTOGRAM_HEIGHT - height);
 
-    ctx.fillStyle = (names[i] === 'Вы') ? COLUMN_COLOR_YOU : COLUMN_COLOR_OTHER;
+    ctx.fillStyle = (names[i] === MAIN_PLAYER_NAME) ? COLUMN_COLOR_YOU : generateBarColor();
     ctx.fillRect(x, y + STEP_BETWEEN_COLUMN, COLUMN_WIDTH, height);
 
     ctx.fillStyle = TEXT_COLOR;
