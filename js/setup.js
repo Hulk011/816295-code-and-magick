@@ -6,7 +6,6 @@ var PLAYER_COLOR_COAT = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 10
 var PLAYER_COLOR_EYES = ['black', 'red', 'blue', 'yellow', 'green'];
 var COUNT = 4;
 var FIRST_NAME_PLAYER = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var FIREBALL_WRAP = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -46,115 +45,6 @@ var createWizardFragment = function (wizards) {
   return fragment;
 };
 
-//
-//
-var setupOpenElement = document.querySelector('.setup-open');
-var setupCloseElement = document.querySelector('.setup-close');
-setupCloseElement.setAttribute('tabindex', 0);
-var showOpenIconElement = document.querySelector('.setup-open-icon');
-showOpenIconElement.setAttribute('tabindex', 0);
-var setupUserNameElement = document.querySelector('.setup-user-name');
-setupUserNameElement.setAttribute('minlength', 2);
-var setupWizardFormElement = document.querySelector('.setup-wizard-form');
-setupWizardFormElement.setAttribute('action', 'https://js.dump.academy/code-and-magick');
-var setupSubmitElement = document.querySelector('.setup-submit');
-setupSubmitElement.setAttribute('tabindex', 0);
-
-setupOpenElement.addEventListener('click', function () {
-  showSetupElement.classList.remove('hidden');
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
-      showSetupElement.classList.add('hidden');
-    }
-  });
-
-  setupSubmitElement.addEventListener('click', function () {
-    setupWizardFormElement.submit();
-  });
-
-  setupCloseElement.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 13) {
-      setupWizardFormElement.submit();
-    }
-  });
-});
-
-setupCloseElement.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
-    showSetupElement.classList.add('hidden');
-  }
-});
-
-setupCloseElement.addEventListener('click', function () {
-  showSetupElement.classList.add('hidden');
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 13) {
-      showSetupElement.classList.remove('hidden');
-    }
-  });
-});
-
-setupUserNameElement.addEventListener('invalid', function () {
-  if (setupUserNameElement.validity.tooShort) {
-    setupUserNameElement.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-  } else if (setupUserNameElement.validity.tooLong) {
-    setupUserNameElement.setCustomValidity('Имя не должно превышать 25-ти символов');
-  } else if (setupUserNameElement.validity.valueMissing) {
-    setupUserNameElement.setCustomValidity('Обязательное поле');
-  } else {
-    setupUserNameElement.setCustomValidity('');
-  }
-});
-
-setupUserNameElement.addEventListener('input', function (evt) {
-  var target = evt.target;
-  if (target.value.length < 2) {
-    target.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-  } else {
-    target.setCustomValidity('');
-  }
-});
-
-var setupPlayerElement = document.querySelector('.setup-player');
-
-var wizardCoatElement = setupPlayerElement.querySelector('.wizard-coat');
-var wizardEyesElement = setupPlayerElement.querySelector('.wizard-eyes');
-var wizardFireballElement = setupPlayerElement.querySelector('.setup-fireball-wrap');
-
-var makeCounter = function (arr) {
-  var i = 1;
-  return function () {
-    if (i === arr.length) {
-      i = 0;
-    }
-    return arr[i++];
-  };
-};
-
-var coatColorCounter = makeCounter(PLAYER_COLOR_COAT);
-var eyesColorCounter = makeCounter(PLAYER_COLOR_EYES);
-var fireballColorCounter = makeCounter(FIREBALL_WRAP);
-
-var changeCoatColor = function () {
-  wizardCoatElement.style.fill = wizardCoatElement.value = coatColorCounter();
-};
-
-var changeEyesColor = function () {
-  wizardEyesElement.style.fill = wizardEyesElement.value = eyesColorCounter();
-};
-
-var changeFireballColor = function () {
-  wizardFireballElement.style.backgroundColor = wizardFireballElement.value = fireballColorCounter();
-};
-
-wizardCoatElement.addEventListener('click', changeCoatColor);
-wizardEyesElement.addEventListener('click', changeEyesColor);
-wizardFireballElement.addEventListener('click', changeFireballColor);
-//
-//
-
 var showSetupElement = document.querySelector('.setup');
 var similarListElement = document.querySelector('.setup-similar-list');
 var wizardTemplateElement = document.querySelector('#similar-wizard-template')
@@ -168,3 +58,5 @@ similarListElement.appendChild(wizardFragment);
 
 showSetupElement.classList.remove('hidden');
 showSetupElement.querySelector('.setup-similar').classList.remove('hidden');
+
+
